@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "better-scroll": "^1.5.5",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",

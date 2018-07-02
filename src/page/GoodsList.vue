@@ -41,10 +41,10 @@
                         <div class="name">{{item.productName}}</div>
                         <div class="details"><a href="javascript:;" :title="`${item.productDetails}`" @click="goDetail(item)">{{item.productDetails}}</a></div>
                         <div class="price">{{item.productPrice | formatMoney('元')}}</div>
-                        <div class="btn-area">
+                        <!-- <div class="btn-area">
                           <a href="javascript:;" class="btn btn--m" @click="goDetail(item)">查看详情</a>
                           <a href="javascript:;" class="btn btn--m" style="background: #d1434a; color:#fff;" @click="addCart(item)">加入购物车</a>
-                        </div>
+                        </div> -->
                       </div>
                     </li>
                   </ul>
@@ -337,6 +337,10 @@ import $ from 'jquery'
     }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
+// @media screen and (max-width:767px)
+//   .details
+//     height:20vw !important
+//     overflow:inherit !important   
 .guide-content
 	width:100%
 	display:flex
@@ -354,4 +358,5 @@ import $ from 'jquery'
 			overflow:hidden
 			// white-space:nowrap
 			text-overflow:ellipsis
+ 
 </style>

@@ -6,9 +6,9 @@
   <span>商品列表</span>
   </mall-bread>
   <div class="w store-content" v-for="item in goodsList">
-    <div class="gray-box">
+    <div ref="gray"  class="gray-box">
       <div class="gallery-wrapper">
-        <div class="gallery">
+        <div ref="gallery" class="gallery">
           <div class="thumbnail">
             <ul>
               <li :class="{on:big===1}" @click="big=1">
@@ -39,7 +39,7 @@
         </div>
       </div>
       <!--右边-->
-      <div class="banner">
+      <div ref="banner" class="banner">
         <div class="sku-custom-title">
           <h4>{{item.productDetails}}</h4>
           <h6>
@@ -64,7 +64,7 @@
       </div>
     </div>
     <!--产品信息-->
-    <div class="item-info">
+    <div ref="itemInfo" class="item-info">
       <y-shelf title="产品信息">
         <div slot="content">
           <!-- <div class="img-item">
@@ -124,6 +124,10 @@
     },
     mounted() {
       this.getdata();
+     
+    },
+    updated() {
+       this.calHeight();
     },
     methods: {
       getdata(){
@@ -141,6 +145,19 @@
             console.log(this.goodsList);
           }
         });
+      },
+      calHeight(){
+        var clientWidth = document.body.clientWidth;
+        console.log("屏幕宽度"+clientWidth)
+        if(clientWidth<1024){
+          var gallery = this.$refs.gallery;
+          var banner = this.$refs.banner;
+          var Height= gallery[0].offsetHeight+banner[0].offsetHeight;
+          console.log("所求高度"+Height)
+          var gray = this.$refs.gray
+          gray[0].style.height = Height+'px'
+
+        }
       },
       editNum (num) {
         this.productNum = num
@@ -227,6 +244,7 @@
 </script>
 <style lang="scss" scoped>
   @import '../assets/style/mixin.scss';
+  @import '../assets/css/detailmobile.css';
   .store-content {
     clear: both;
     width: 1220px;
@@ -243,11 +261,15 @@
       .gallery {
         display: flex;
         width: 540px;
+        
         .thumbnail {
           li:first-child {
             margin-top: 0px;
           }
           li {
+            // @media screen and (max-width: 1023px){
+            //   float:left
+            // }
             @include wh(80px);
             margin-top: 10px;
             padding: 12px;
@@ -258,7 +280,7 @@
             &.on {
               padding: 10px;
               border: 3px solid #ccc;
-              border: 3px solid rgba(0, 0, 0, .2);
+              border: 3px solid rgba(150, 56, 56, 0.2);
             }
             img {
               display: block;
@@ -269,10 +291,20 @@
         .thumb {
           .big {
             margin-left: 20px;
+            // @media screen and (max-width: 1023px) {
+            
+            // // width: 35vw;
+            // // height: 22vh;
+            // }
           }
           img {
             display: block;
-            @include wh(440px)
+            @include wh(440px);
+            // @media screen and (max-width: 1023px) {
+            // width:100%;
+            // height:100%;
+            // }
+            
           }
         }
       }

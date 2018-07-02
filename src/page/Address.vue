@@ -180,7 +180,7 @@ import axios from 'axios'
               this.addressData = res.result;
               // console.log(res.result);
             }else{
-              console.log(res.msg);
+              alert(res.msg);
             }
           });
         },

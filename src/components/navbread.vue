@@ -21,6 +21,17 @@
       </nav>   
   </div>
 </template>
+<script>
+  export default {
+    name:'mallBread',
+    data(){
+      return{
+
+      }
+    }
+  }
+</script>
+
 <style lang="stylus" scoped>
 .nav-bar
   height :40px
@@ -45,7 +56,7 @@
         min-height:200px
         display :none
         position:absolute
-        z-index :9
+        z-index :99
         background :#f5f7fc
         // @media screen and (min-width:1025px) {
         //   margin-top:15px

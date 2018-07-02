@@ -41,9 +41,6 @@
   import mallHeader from '../components/header.vue'
   import mallFooter from '../components/footer.vue'
   import mallBread from '../components/navbread.vue'
-
-  import axios from 'axios'
-  import $ from 'jquery'
   export default {
     name:'About',
     data () {

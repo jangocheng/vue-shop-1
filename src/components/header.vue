@@ -137,10 +137,13 @@
                     <input type="password" tabindex="2"  name="password" v-model="userPwd" class="regi_login_input regi_login_input_left login-input-no input_text" placeholder="密码" @keyup="validate" @keyup.enter="login" @blur="validate">
                   </li>
                   <li class="check-btn">
-                    <label class="el-checkbox auto-login"><span class="el-checkbox__input">
-                      <span class="el-checkbox__inner"></span>
-                      <input type="checkbox" class="el-checkbox__original" value="">
-                      </span><span class="el-checkbox__label">记住密码<!----></span>
+                    <label class="el-checkbox auto-login">
+                      <span class="el-checkbox__input">
+                        <span class="el-checkbox__inner">
+                        </span>
+                        <input type="checkbox" checked="checked" class="el-checkbox__original" value="">
+                      </span>
+                      <span class="el-checkbox__label">记住密码<!----></span>
                     </label> 
                     <a href="javascript:;" class="register acolor" @click="ifRegister">立即注册</a> 
                     <a style="padding: 1px 0px 0px 10px;" class="acolor">忘记密码 ?</a>
@@ -761,6 +764,16 @@ export default {
                   white-space: nowrap
                   outline: 0
                   line-height: 1
+                  width:14px
+                  height:14px
+                  .el-checkbox__original
+                    width:15.6px
+                    height:15.6px
+                    border:black solid 2px
+                    position:absolute
+                    z-index:99
+                    margin-left:-14px
+                    opacity:1
                 .el-checkbox__label
                   font-size: 14px
                   padding-left: 5px
