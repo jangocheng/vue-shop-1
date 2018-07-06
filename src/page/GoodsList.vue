@@ -1,8 +1,6 @@
 <template>
     <div>
       <div class="index-wrapper">
-        <mall-header v-on:initscroll="scrollTop"></mall-header>
-        <mall-bread></mall-bread>
         <div class="guide-content">
             <!-- <div class="left-content"></div> -->
             <div class="right-content">
@@ -71,7 +69,6 @@
         		<router-link to="/cart" class="btn btn--m" @click="mdShow=false" v-if="ifCart">去购物车</router-link>
         	</div>
         </modal>
-        <mall-footer></mall-footer>
       </div>
     </div>
 </template>
@@ -82,9 +79,6 @@ import "../assets/css/product.css"
 import "../assets/css/checkout.css"
 import "../assets/css/icomoon/style.css"
 import "../assets/css/goods.css"
-import mallHeader from '../components/header.vue'
-import mallFooter from '../components/footer.vue'
-import mallBread from '../components/navbread.vue'
 import modal from '../components/modal.vue'
 import slideShow from '../components/slideShow.vue'
 // import BScroll from 'better-scroll'
@@ -328,9 +322,6 @@ import $ from 'jquery'
         }
       },
       components: {
-        mallHeader,
-        mallFooter,
-        mallBread,
         modal,
         slideShow
       }

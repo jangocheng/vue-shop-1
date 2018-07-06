@@ -70,8 +70,23 @@ CREATE TABLE IF NOT EXISTS `cartlist` (
   PRIMARY KEY (`cartId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
+--
+-- 表的结构 `buynowlist`
+--
+drop table if exists buynowlist
+CREATE TABLE IF NOT EXISTS `buynowlist` (
+  `buynowId` int(16) NOT NULL AUTO_INCREMENT,
+  `userId` varchar(64) NOT NULL,
+  `productId` int(32) NOT NULL,
+  `productName` varchar(128) NOT NULL,
+  `productPrice` int(32) NOT NULL,
+  `checked` varchar(32) NOT NULL,
+  `productNum` int(32) NOT NULL,
+  `productImg` varchar(256) NOT NULL,
+  `totalPrice` varchar(64) NOT NULL,
+  PRIMARY KEY (`buynowId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 -- --------------------------------------------------------
-
 --
 -- 表的结构 `goods`
 --

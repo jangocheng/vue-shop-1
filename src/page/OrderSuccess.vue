@@ -1,6 +1,5 @@
 <template>
     <div>
-      <mall-header></mall-header>
       <div class="container">
         <div class="page-title-normal">
           <h2 class="page-title-h2"><span>check out</span></h2>
@@ -34,12 +33,9 @@
           </div>
         </div>
       </div>
-      <mall-footer></mall-footer>
     </div>
 </template>
 <script>
-import mallHeader from '../components/header.vue'
-import mallFooter from '../components/footer.vue'
     export default{
         data(){
             return{
@@ -55,10 +51,6 @@ import mallFooter from '../components/footer.vue'
             this.orderId = Base64.decode(this.$route.query.m);
             this.totalPrice = Base64.decode(this.$route.query.n);
           }
-        },
-        components: {
-          mallHeader,
-          mallFooter
         }
     }
 </script>

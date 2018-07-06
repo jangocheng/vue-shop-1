@@ -8,6 +8,7 @@ import OrderConfirm from '../page/OrderConfirm'
 import OrderSuccess from '../page/OrderSuccess'
 import OrderList from '../page/OrderList.vue'
 import GoodsDetails from '../page/GoodsDetails'
+import Checkout from '../page/Checkout'
 import About from '../components/About'
 import Contact from '../components/Contact'
 import store from '../store/index.js'
@@ -46,9 +47,8 @@ export default new Router({
       component: Cart,
       beforeEnter: (to, from, next) => {
         if(store.state.myName){
+          store.state.buynowlist.splice(0,1)
           next()
-        }else{
-          alert("还没登录，请先登录！")
         }
       }
     },
@@ -76,6 +76,11 @@ export default new Router({
       path: '/orderlist',
       name: 'OrderList',
       component: OrderList
+    },
+    {
+      path: '/checkout',
+      name: 'Checkout',
+      component: Checkout
     }
   ]
 })

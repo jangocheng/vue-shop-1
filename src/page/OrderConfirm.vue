@@ -1,9 +1,6 @@
 <template>
   <div>
-    <mall-header></mall-header>
-    <mall-bread>
         <span>查看订单</span>
-    </mall-bread>
     <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>
         <symbol id="icon-add" viewBox="0 0 32 32">
@@ -48,21 +45,47 @@
           <div class="cart-item order-item">
             <div class="cart-item-head">
               <ul>
-                <li>Order contents</li>
-                <li>Price</li>
-                <li>Quantity</li>
-                <li>Subtotal</li>
+                <li>订单内容</li>
+                <li>价格</li>
+                <li>数量</li>
+                <li>总价</li>
               </ul>
             </div>
             <ul class="cart-item-list">
-              <li v-for="item in cartList" v-if="item.checked=='1'">
+              <li v-for="item in cartList" v-if="item.checked=='1' && buylist.length==0">
                 <div class="cart-tab-1">
                   <div class="cart-item-pic">
                     <img :src="`/static/${item.productImg}`" alt="XX">
                   </div>
                   <div class="cart-item-title">
                     <div class="item-name">{{item.productName}}</div>
+                  </div>
+                </div>
+                <div class="cart-tab-2">
+                  <div class="item-price">{{item.productPrice | formatMoney('')}}</div>
+                </div>
+                <div class="cart-tab-3">
+                  <div class="item-quantity">
+                    <div class="select-self">
+                      <div class="select-self-area">
+                        <span class="select-ipt">x{{item.productNum}}</span>
+                      </div>
+                    </div>
+                    <div class="item-stock item-stock-no">有货</div>
+                  </div>
+                </div>
+                <div class="cart-tab-4">
+                  <div class="item-price-total">{{item.productPrice*item.productNum | formatMoney('')}}</div>
+                </div>
+              </li>
 
+              <li v-for="item in buylist">
+                <div class="cart-tab-1">
+                  <div class="cart-item-pic">
+                    <img :src="`/static/${item.productImg}`" alt="XX">
+                  </div>
+                  <div class="cart-item-title">
+                    <div class="item-name">{{item.productName}}</div>
                   </div>
                 </div>
                 <div class="cart-tab-2">
@@ -150,18 +173,15 @@
         </div>
       </div>
     </pay-suc>
-    <mall-footer></mall-footer>
   </div>
 </template>
 <script>
-import mallHeader from '../components/header.vue'
-import mallFooter from '../components/footer.vue'
-import mallBread from '../components/navbread.vue'
 import paySuc from '../components/paySuc.vue'
 import axios from 'axios'
   export default{
       data(){
           return{
+            buylist:[],
             cartList:[],
             discount:13.2,
             shipPrice:0,
@@ -188,15 +208,22 @@ import axios from 'axios'
       },
       mounted() {
         this.getCartData();
+        this.getBuylist()
       },
       computed:{
         itemPrice(){
           var money = 0;
-          this.cartList.forEach((item)=>{
+          if(this.buylist.length==0){
+           this.cartList.forEach((item)=>{
             if(item.checked=='1'){
               money += parseFloat(item.productPrice)*parseInt(item.productNum);
-            }
-          })
+             }
+            })
+          }else{
+            this.buylist.forEach((item)=>{ 
+             money += parseFloat(item.productPrice)*parseInt(item.productNum);    
+            })
+          }
           return money;
         },
         totalPrice() {
@@ -209,6 +236,11 @@ import axios from 'axios'
         }
       },
       methods: {
+        getBuylist(){
+          this.buylist=this.$store.state.buynowlist
+          console.log("订单确认页获取到的buylist")
+          console.log(this.buylist)
+        },
         getCartData() {
           axios.get('/api/users/getCartData').then((res) => {
             res = res.data;
@@ -243,6 +275,7 @@ import axios from 'axios'
         yesPay() {
           this.payShow = false;
           this.pay();
+          console.log(this.$store.state.haveLen)
         },
          pay() {
           var addressId = this.$route.query.addressId;
@@ -252,28 +285,30 @@ import axios from 'axios'
             totalPrice:this.totalPrice,
             discount:this.discount,
             shipPrice:this.shipPrice,
-            freightRisk:this.freightRisk
+            freightRisk:this.freightRisk,
+            buylist:this.buylist
 
           };
           axios.get('/api/users/payOrder', {
             params:param
           }).then((res) => {
             res = res.data;
+            console.log(res)
             if(res.status === '1') {
               setTimeout(()=>{
                 this.mdShow = false;
                 this.$router.push({
                   path:`/orderinfo?m=${Base64.encode(res.result)}&n=${Base64.encode(this.totalPrice)}`
-              });
-              }, 6000);
+              })
+                this.$store.commit('initCartCount', 0);
+                this.$store.commit('updateHaveProduct', false);
+                this.$store.commit('deleteAllCartList');
+              }, 3000);
             }
           })
         },
       },
       components: {
-        mallHeader,
-        mallBread,
-        mallFooter,
         paySuc
       }
   }

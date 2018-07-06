@@ -1,9 +1,5 @@
 <template>
     <div>
-      <mall-header v-on:initscroll="scrollTop"></mall-header>
-      <mall-bread>
-          <span>收货地址</span>
-      </mall-bread>
       <div class="checkout-page">
         <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           <defs>
@@ -52,7 +48,7 @@
             <div class="addr-list-wrap">
               <div class="addr-list">
                 <ul>
-                  <li v-for="item in limitAdressNum" :class="{'check':item.isDefault===1}">
+                  <li v-for="item in limitAdressNum" :class="{'check':item.isDefault===1}" @click="setDefault(item.addressId),this.addrId = item.addressId">
                     <dl>
                       <dt>{{item.userName}}</dt>
                       <dd class="address">{{item.streetName}}</dd>
@@ -64,7 +60,7 @@
                       </a>
                     </div>
                     <div class="addr-opration addr-default">
-                      <a href="javascript:;" class="addr-set-default-btn" @click="setDefault(item.addressId),this.addrId = item.addressId" v-if="item.isDefault!==1"><i>设为默认</i></a>
+                      <a href="javascript:;" class="addr-set-default-btn" v-if="item.isDefault!==1"><i>设为默认</i></a>
                     </div>
                     <div class="addr-opration addr-default" v-if="item.isDefault===1">默认地址</div>
                   </li>
@@ -107,13 +103,9 @@
           <a href="javascript:;" class="btn btn--m" @click="deleteAdr">确定</a>
         </div> -->
       </insert-adr>
-      <mall-footer></mall-footer>
     </div>
 </template>
 <script>
-import mallHeader from '../components/header.vue'
-import mallFooter from '../components/footer.vue'
-import mallBread from '../components/navbread.vue'
 import modal from '../components/modal.vue'
 import insertAdr from '../components/insertAdr.vue'
 import axios from 'axios'
@@ -235,9 +227,6 @@ import $ from 'jquery'
         }
       },
       components:{
-        mallHeader,
-        mallBread,
-        mallFooter,
         modal,
         insertAdr
       }

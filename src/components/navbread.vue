@@ -2,7 +2,7 @@
   <div>
       <nav class="nav-bar">
         <ul class="nav-bar-ul">
-          <li><router-link  to="/">首页</router-link><li>
+          <li><router-link to="/">首页</router-link><li>
           <li class="li-brand"><a href="#">品牌</a>
             <ul class="nav-bar-ul-second">
               <li><a href="http://hd.oppo.com/act/2018/FindX0622/index.html?utm_source=baidu&utm_medium=cpcfindx&utm_campaign=pcfindx00996">OPPO find x </a></li>
@@ -15,8 +15,8 @@
               <li><a href="https://www.smartisan.com/r1/overview">坚果R1</a></li>
             </ul>
           </li>
-          <li><router-link  to="/about">关于我们</router-link></li>
-          <li><router-link  to="/contact">联系我们</router-link></li>
+          <li><router-link to="/about">关于我们</router-link></li>
+          <li><router-link to="/contact">联系我们</router-link></li>
         </ul>
       </nav>   
   </div>

@@ -1,9 +1,6 @@
 <!--联系我们-->
 <template>
   <div>
-   
-    <mall-header></mall-header>
-    <mall-bread></mall-bread>
     <div class="contain">
         <div class="head">
             <h1>反馈留言</h1>
@@ -42,14 +39,10 @@
             </div>
         </div>
     </div> 
-    <mall-footer></mall-footer>
   </div>
 </template>
 
 <script>
-  import mallHeader from '../components/header.vue'
-  import mallFooter from '../components/footer.vue'
-  import mallBread from '../components/navbread.vue'
   export default {
     name:'About',
     data () {
@@ -64,13 +57,6 @@
     },
     methods: {
         
-    },
-    components: {
-      
-      mallHeader,
-      mallFooter,
-      mallBread
- 
     }
   
   }

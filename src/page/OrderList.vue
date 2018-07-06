@@ -1,9 +1,5 @@
 <template>
   <div>
-    <mall-header v-on:initscroll="scrollTop"></mall-header>
-    <mall-bread>
-    <span>订单列表</span>
-    </mall-bread>
     <y-shelf title="我的订单">
       <div slot="content" style="min-height:300px;">
         <div v-if="orderList.length" style="min-height: 10vw; border-bottom:1px solid #ededed;">
@@ -12,8 +8,8 @@
               <div class="first">
                 <div>
                   <span class="date">{{item.createDate}}</span>
-                  <span class="order-id"> 订单号： <a>{{item.orderId}}
-                  </a> </span>
+                  <span class="order-id"> 订单号</span>
+                  <span class="order-name"> 商品名称</span>
                 </div>
                 <div class="f-bc">
                   <span class="price">单价</span>
@@ -29,9 +25,11 @@
             <div class="pr" style="position:relative;">
               <div class="cart" v-for="" :key="j">
                 <div class="cart-l" :class="{bt:j>0}">
-                  <div class="car-l-l">
+                  <div class="car-l-l">         
                     <div class="img-box"><a><img  v-lazy="`static/${item.productImg}`" alt=""></a></div>
                     <div class="ellipsis"><a style="color: #626262;"></a></div>
+                    <div class="orderlistId">{{item.orderId}}</div>
+                    <div class="productName">{{item.productName}}</div>
                   </div>
                   <div class="cart-l-r">
                     <div>¥{{item.productPrice}}</div>
@@ -102,14 +100,10 @@
         </div>
       </div>
     </pay-suc>
-     <mall-footer></mall-footer>
   </div>
 </template>
 <script>
 import YShelf from '../components/shelf.vue'
-import mallHeader from '../components/header.vue'
-import mallFooter from '../components/footer.vue'
-import mallBread from '../components/navbread.vue'
 import paySuc from '../components/paySuc.vue'
 import axios from 'axios'
 import $ from 'jquery'
@@ -219,9 +213,6 @@ import $ from 'jquery'
     },
     components: {
       YShelf,
-      mallHeader,
-      mallFooter,
-      mallBread,
       paySuc
     }
   }
@@ -339,6 +330,12 @@ import $ from 'jquery'
       .car-l-l {
         display: flex;
         align-items: center;
+        .orderlistId{
+          margin-left:-200px;
+        }
+        .productName{
+          margin-left:50px;
+        }
       }
     }
     .cart-r {

@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var $conf = require('../conf/conf');
+var bodyParser = require('body-parser')
+var app = express()
+app.use(bodyParser.urlencoded({ extended: false }))
 // 使用连接池
 var pool = mysql.createPool($conf.mysql);
 router.use(express.static('public'));
@@ -135,13 +138,6 @@ router.get('/addCart', function (req, res) {
             result:''
           });
         } else {
-          /*res.json({
-            status:'0',
-            msg:'',
-            data:{
-              list:result
-            }
-          });*/
           let userId = req.cookies.userId;
           let proId = result[0].productId; 
           let proName = result[0].productName;
@@ -204,6 +200,35 @@ router.get('/addCart', function (req, res) {
     });
   }
 });
+
+//立即购买
+router.post('/buynow',(req,res)=>{
+  var productId = req.body.params.productId; // 获取前台传过来的productId值
+  if(pool){
+    var sql = `select * from goods where productId=${productId}`;
+    pool.query(sql, (err, result) => {
+      if (err) {
+        res.json({
+          status: '-1', // 数据库连接错误
+          msg: err.message,
+          result: ''
+        });
+      } else {
+        result = {
+          productName: result[0].productName,
+          productPrice: result[0].productPrice,
+          productNum: result[0].productNum,
+          productImg: result[0].productImg,
+          userId:req.cookies.userId
+        }
+        res.json(result)
+      }
+    })
+  }
+  
+})
+
+
 
 //查看商品详情
 router.get('/getDetails', (req,res,next) => {

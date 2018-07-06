@@ -39,9 +39,9 @@
       </defs>
     </svg>
     <div class="container">
-      <div class="cart" v-show="haveLen">
+      <div class="cart" v-if="buylist.length">
         <div class="page-title-normal">
-          <h2 class="page-title-h2"><span>购物车</span></h2>
+          <h2 class="page-title-h2"><span>立即购买</span></h2>
         </div>
         <div class="item-list-wrap">
           <div class="cart-item">
@@ -51,19 +51,11 @@
                 <li>价格</li>
                 <li>数量</li>
                 <li>总价</li>
-                <li>删除</li>
               </ul>
             </div>
             <ul class="cart-item-list">
-              <li v-for="item in cartList">
+              <li v-for="item in buylist">
                 <div class="cart-tab-1">
-                  <div class="cart-item-check" @click="changeMoney(item,2)">
-                    <a class="checkbox-btn item-check-btn" :class="{'check':item.checked==='1'}">
-                      <svg class="icon icon-ok">
-                        <use xlink:href="#icon-ok"></use>
-                      </svg>
-                    </a>
-                  </div>
                   <div class="cart-item-pic">
                     <img :src="`/static/${item.productImg}`">
                   </div>
@@ -88,61 +80,25 @@
                 <div class="cart-tab-4">
                   <div class="item-price-total">{{item.productPrice*item.productNum | formatMoney('')}}</div>
                 </div>
-                <div class="cart-tab-5">
-                  <div class="cart-item-opration">
-                    <a href="javascript:;" class="item-edit-btn" @click="delConfirm(item)">
-                      <svg class="icon icon-del">
-                        <use xlink:href="#icon-del"></use>
-                      </svg>
-                    </a>
-                  </div>
-                </div>
               </li>
             </ul>
           </div>
         </div>
         <div class="cart-foot-wrap">
           <div class="cart-foot-inner">
-            <div class="cart-foot-l">
-              <div class="item-all-check">
-                <a>
-                  <span class="checkbox-btn item-check-btn" v-bind:class="{'check':checkAllFlag}" @click="selectAllToggle()">
-                      <svg class="icon icon-ok"><use xlink:href="#icon-ok"/></svg>
-                  </span>
-                  <span>全选</span>
-                </a>
-                <!-- <a href="javascript:void 0" class="item-del-btn" @click="selectAll(false)" v-if="checkAllFlag">
-                    <span>取消全选</span>
-                </a> -->
-              </div>
-            </div>
             <div class="cart-foot-r">
               <div class="item-total">
-                <!-- <span>已选商品：<em class="total-num">{{selectedCount}}</em>件</span> -->
-                合计(不含运费)：<span class="total-price">{{totalMoney | formatMoney('')}}</span>
+                合计(不含运费)：<span class="total-price">{{totalPrice() | formatMoney('')}}</span>
               </div>
               <div class="btn-wrap">
-                <a class="btn btn--red" :class="{'btn--dis':selectedCount==0}" @click="checkOut">结算{{'('+selectedCount+')'}}</a>
+                <a class="btn btn--red" :class="{'btn--dis':selectedCount==0}" @click="checkOut">结算</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="ifnull" v-show="!haveLen">
-        <div class="content">
-          <img src="../../static/images/cart-empty-new.png" alt="" style="margin:0 auto; width:120px; display:block;">
-          <p style="margin-top:30px; font-size:16px; font-weight:500;">您的购物车竟然是空的，快去添加吧！</p>
-        </div>
-         
-      </div>
     </div>
-    <modal :mdShow="mdShow" v-on:close="closeModal">
-      <p slot="message">你确认删除此订单信息吗?</p>
-      <div slot="btnGroup">
-        <a href="javascript:;" class="btn btn--m" @click="closeModal">取消</a>
-        <a href="javascript:;" class="btn btn--m" @click="delProduct()">确定</a>
-      </div>
-    </modal>
+  
   </div>
 </template>
 <script>
@@ -151,66 +107,37 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 import $ from 'jquery'
     export default{
+        name:'Checkout',
         data(){
             return{
-              cartNumList:[],
-              totalMoney:0,
-              delFlag:false,
-              curProduct:'',
-              mdShow:false,
-              selectProduct:[],
-              isfull:false
+             buylist:[],
+             totalMoney:0
             }
         },
+
         mounted(){
-          this.getCartNum();
+         this.buynowlist()
         },
-        computed:{
-          checkAllFlag() {
-            return this.selectedCount === this.cartList.length;
-          },
-          selectedCount() {
-            var count = 0;
-            this.cartList.forEach((item, index) => {
-              if(item.checked == '1') {
-                count++;
-              }
-            });
-            return count;
-          },
-          ...mapState(['cartList','haveLen'])
-        },
+
         filters:{
           formatMoney: function(value,type) {
             return "¥" + value.toFixed(2) + type;
           }
         },
+       
         methods:{
-          getCartNum(){
-            axios.get('/api/users/getCartData').then((res) => {
-              res = res.data;
-              if(res.status==='1'){
-                this.cartNumList = res.result;
-                console.log("从后台渲染的购物车列表cartNumList：")
-                console.log(this.cartNumList)
-                console.log("vuex里的购物车列表cartList")
-                console.log(this.cartList)
-                this.$nextTick(() => {
-                this.totalPrice();
-              });
-                if(res.result.length == 0) {
-                  this.$store.commit('updateHaveProduct', false);
-                } else {
-                  this.$store.commit('updateHaveProduct', true);
-                }
-              }else if(res.status==='0'){
-                alert('没有数据,请添加');
-              }else{
-                alert('请先登录');
-              }
-            });
+           buynowlist(){
+            this.buylist= this.$store.state.buynowlist
+            console.log("以下是buylist")
+            console.log(this.buylist)
           },
-          changeMoney(product, flag){
+           checkOut(){
+              this.$router.push({
+                path:'/address'
+              })
+          },
+      
+            changeMoney(product, flag){
             if(flag === 1){
               product.productNum++;
             }else if(flag === -1) {
@@ -221,97 +148,18 @@ import $ from 'jquery'
               }
             } else{
               product.checked = product.checked=='1'?'0':'1';
-            }
-            var param = {
-              productId:product.productId,
-              productNum:product.productNum,
-              checked:product.checked
-            };
-              axios.get('/api/users/editProductNum', {
-                params:param
-              }).then((res) => {
-                res = res.data;
-                if(res.status === '1') {
-                  console.log(res.msg);
-                }
-              });
+            }   
             this.totalPrice();
-          },
-          selectAllToggle() {
-            var flag = !this.checkAllFlag;
-            this.cartList.forEach((item, index) => {
-              item.checked = flag===true?'1':'0';
-            });
-            var param = {
-              checked:flag===true?'1':'0'
-            };
-            axios.get('/api/users/editSelectAll', {
-              params:param
-            }).then((res) => {
-              res = res.data;
-              if(res.status === '1') {
-                console.log(res.msg);
-              }
-            });
-            this.totalPrice();
-          },
-          totalPrice() {
-            this.totalMoney = 0;
-            var _this = this;
-            this.cartList.forEach((item, index) => {
-              if(item.checked == '1'){
-                _this.totalMoney+=item.productPrice*item.productNum;
-              }
-              // console.log(_this.totalMoney);
-            });
-          },
-          closeModal() {
-            this.mdShow = false;
-          },
-          delConfirm(item){
-            this.mdShow=true;
-            this.curProduct=item;
-          },
-          delProduct() {
-            var index = this.cartList.indexOf(this.curProduct);
-            console.log(index);
-            var param = {
-              productId:this.curProduct.productId
-            };
-            axios.get('/api/users/delProduct', {
-              params:param
-            }).then((res) => {
-              res = res.data;
-              if(res.status === '1') {
-                this.cartList.splice(index, 1);
-                this.$store.commit('updateCartCount', -1,'');
-                this.$store.commit('checkCartLen','');
-                this.mdShow = false;
-                let delGoodsId = ({
-                  productId:this.curProduct.productId
-                });
-                this.$store.commit('delCartList', delGoodsId);
-                this.totalPrice();
-              }
-            });
-          },
-          checkOut() {
-            if(this.selectedCount>0) {
-              this.$router.push({
-                path:'/address'
-              });
-            }
-          },
-          scrollTop() {
-            var promise = new Promise(()=>{
-              this.$router.push({
-                  path:`/`
-              });
-            }).then($('html,body').animate({scrollTop:480},500));
-        }
         },
-        components:{
-          modal
+
+        totalPrice(){
+            this.buylist.forEach((item, index) => {
+                 this.totalMoney=item.productPrice*item.productNum;
+              
+            })
+            return this.totalMoney
+        }
+          
         }
     }
 </script>

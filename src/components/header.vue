@@ -36,20 +36,21 @@
                         <router-link to="/orderlist">我的订单</router-link>
                       </li>
                       <li class="user-li-style">
-                        <router-link to="/user/information">账号资料</router-link>
-                      </li>
-                      <li class="user-li-style">
                         <router-link to="/addresslist">收货地址</router-link>
-                      </li>
-                      <!-- <li class="user-li-style">
-                        <router-link to="/user/support">售后服务</router-link>
-                      </li> -->
-                      <li class="user-li-style">
-                        <router-link to="/user/coupon">我的优惠</router-link>
                       </li>
                       <li class="user-li-style">
                         <a href="javascript:;" @click="logout">退出</a>
                       </li>
+                      <!-- <li class="user-li-style">
+                        <router-link to="/user/information">账号资料</router-link>
+                      </li> -->
+                      
+                      <!-- <li class="user-li-style">
+                        <router-link to="/user/support">售后服务</router-link>
+                      </li> -->
+                      <!-- <li class="user-li-style">
+                        <router-link to="/user/coupon">我的优惠</router-link>
+                      </li> -->
                     </ul>
                   </div>
                 </div>

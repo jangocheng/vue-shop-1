@@ -8,7 +8,8 @@ const state = {
   cartList:[],
   haveLen:false,
   totalPrice:0,
-  checkGoodsLen:true
+	checkGoodsLen:true,
+	buynowlist:[]
 }
 
 export default new Vuex.Store({
@@ -64,7 +65,8 @@ export default new Vuex.Store({
 	      goods.checked = '1';
 	      cart.push(goods);
 	    }
-	    state.cartList = cart;
+			state.cartList = cart;
+			state.buynowlist.splice(0, 1)
   	},
   // 删除购物车商品
   	delCartList(state,{productId}) {
@@ -91,6 +93,21 @@ export default new Vuex.Store({
   		} else{
   			state.haveLen = true;
   		}
-  	}
+		},
+
+		// buynowlist:[{
+		// 	productId:...,
+		// 	productImg:..,
+		// 	...
+		// }]
+		updatebuynowlist(state,data){
+				state.buynowlist.splice(0,1)
+				state.buynowlist.push(data)
+				state.buynowlist[0].productNum=1
+
+		},
+		deleteAllCartList(state,data){
+				state.cartList.splice(0,state.cartList.length)
+		}
   }
 })

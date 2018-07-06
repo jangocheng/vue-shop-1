@@ -4,6 +4,7 @@ var mysql = require('mysql');
 require('../util/util');
 var bodyParser = require('body-parser')
 var app = express()
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 // var md5=require('md5');  
 var $conf = require('../conf/conf');
@@ -429,105 +430,149 @@ router.get("/payOrder", (req, res, next) => {
     var discount = req.param('discount'); // 获取前台传值
     var shipPrice = req.param('shipPrice'); // 获取前台传值
     var freightRisk = req.param('freightRisk'); // 获取前台传值
-    var checked = '1';
+    var buylist = req.param('buylist'); // 数组里套对象,是个字符串
     var defaultVal = '1';
-    let sql = `select * from cartlist where userId=${userId} and checked=${checked}`;
-    let adrsql = `select * from addresslist where userId=${userId} and isDefault=${defaultVal}`;
+    let adrsql = 'select * from addresslist where userId=? and isDefault=?'
     var goodsList = [];
     var addrContent = '';
-    var orderList = [];
-    pool.query(sql, (err, result) => {
-      if(err) {
-        res.json({
-          status:'-1',
-          msg:err.message
-        });
-      } else {
-        goodsList = result;
-        pool.query(adrsql, (err, result) => {
-        if(err) {
+    if(buylist==undefined||buylist.length==0){
+    var checked = '1'
+    var sql = 'select * from cartlist where userId=? and checked=?'
+      pool.query(sql, [userId, checked], (err, result) => {
+        if (err) {
           res.json({
-            status:'-1',
-            msg:err.message
+            status: '-1',
+            msg: err.message
           });
         } else {
-          addrContent = result;
-          // res.json({
-          //   data:goodsList,
-          //   data2:addrContent
-          // });
-          var platform = '622';
-          var r1 = Math.floor(Math.random()*10);
-          var r2 = Math.floor(Math.random()*10);
-          var sysDate = new Date().Format('yyyyMMddhhmmss');
-          var createDate = new Date().Format('yyyy-MM-dd hh:mm:ss');
-          var orderIdVal = platform+r1+sysDate+r2;
-          var ifPay = 1;
-          let {userName,streetName,postCode,tel} = addrContent[0];
-          var ire = goodsList.map((item) => {
-            let {userId,productId,productName,productPrice,productNum,productImg,totalPrice} = item;
-            return {orderIdVal,userId,productId,productName,productPrice,productNum,productImg,userName,streetName,postCode,tel,totalPrice,itemPrice,discount,shipPrice,freightRisk,createDate,ifPay};
-          });
-          var values = [];
-          ire.forEach((n, i) => {
-              var _arr = [];
-              for(var m in n){
-                  _arr.push(n[m]);
-              }
-              values.push(_arr);
-          });
-          // res.json({
-          //   data:values
-          // });
-          let inSql = "insert into orderlist(orderId,userId,productId,productName,productPrice,productNum,productImg,postName,streetName,postCode,tel,totalPrice,itemPrice,discount,shipPrice,freightRisk,createDate,ifPay) values?";
-          let delSql = `delete from cartlist where checked=${checked}`;
-          pool.query(inSql, [values], (err, result) => {
-            if(err) {
+          goodsList = result;//查carlist出来的结果
+          console.log("查carlist出来的结果" + JSON.stringify(goodsList))//成功
+          //查地址
+          pool.query(adrsql, [userId, defaultVal], (err, result) => {
+            if (err) {
               res.json({
-                status:'-1',
-                msg:err.message
+                status: '-1',
+                msg: err.message
               });
             } else {
+              addrContent = result;//查addresslist出来的结果
+              console.log("查addresslist出来的结果：" + JSON.stringify(addrContent))//设为默认地址的时候成功
+
+              //生成订单号
+              var platform = '622';
+              var r1 = Math.floor(Math.random() * 10);
+              var r2 = Math.floor(Math.random() * 10);
+              var sysDate = new Date().Format('yyyyMMddhhmmss');
+              var createDate = new Date().Format('yyyy-MM-dd hh:mm:ss');
+              var orderIdVal = platform + r1 + sysDate + r2;
+              var ifPay = 1;
+              let { userName, streetName, postCode, tel } = addrContent[0];
+              var ire = goodsList.map((item) => {
+                let { userId, productId, productName, productPrice, productNum, productImg, totalPrice } = item;
+                return { orderIdVal, userId, productId, productName, productPrice, productNum, productImg, userName, streetName, postCode, tel, totalPrice, itemPrice, discount, shipPrice, freightRisk, createDate, ifPay };
+              });
+              var values = [];
+              ire.forEach((n, i) => {
+                var _arr = [];
+                for (var m in n) {
+                  _arr.push(n[m]);
+                }
+                values.push(_arr);
+              });
               // res.json({
-              //   status:'1',
-              //   msg:'suc',
-              //   result:result
+              //   data:values
               // });
-              pool.query(delSql, (err, result) => {
-                if(err) {
+              let inSql = "insert into orderlist(orderId,userId,productId,productName,productPrice,productNum,productImg,postName,streetName,postCode,tel,totalPrice,itemPrice,discount,shipPrice,freightRisk,createDate,ifPay) values?";
+              let delSql = `delete from cartlist where checked=${checked}`;
+              pool.query(inSql, [values], (err, result) => {
+                if (err) {
                   res.json({
-                    status:'-1',
-                    msg:err.message
+                    status: '-1',
+                    msg: err.message
                   });
                 } else {
-                  res.json({
-                    status:'1',
-                    msg:'suc',
-                    result:orderIdVal
+                  pool.query(delSql, (err, result) => {
+                    if (err) {
+                      res.json({
+                        status: '-1',
+                        msg: err.message
+                      });
+                    } else {
+                      res.json({
+                        status: '1',
+                        msg: 'suc',
+                        result: orderIdVal
+                      });
+                    }
                   });
                 }
               });
             }
-          });
+          })
         }
-    });
-      }
-    });
-    // var productId = goodsList[0].productId;
-    // let sql2 = `select * from goods where productId=${productId}`;
-    // pool.query(sql2, (err, result) => {
-    //   if(err) {
-    //     res.json({
-    //       status:'-1',
-    //       msg:err.message
-    //     });
-    //   } else {
-    //     res.json({
-    //       data:result
-    //     });
-    //   }
-    // });
+      });
+     }else{      
+          //查地址
+          pool.query(adrsql, [userId, defaultVal], (err, result) => {
+            if (err) {
+              res.json({
+                status: '-1',
+                msg: err.message
+              });
+            } else {
+              console.log("执行了buylist")
+              addrContent = result;//查addresslist出来的结果
+              console.log("查addresslist出来的结果：" + JSON.stringify(addrContent))//设为默认地址的时候成功
 
+              //生成订单号
+              var platform = '622';
+              var r1 = Math.floor(Math.random() * 10);
+              var r2 = Math.floor(Math.random() * 10);
+              var sysDate = new Date().Format('yyyyMMddhhmmss');
+              var createDate = new Date().Format('yyyy-MM-dd hh:mm:ss');
+              var orderIdVal = platform + r1 + sysDate + r2;
+              var ifPay = 1;              
+              var changebuylist =JSON.parse(buylist[0]) //得到的是字符串要转化成json对象     
+              let { userName, streetName, postCode, tel } = addrContent[0];
+              var ire ={ 
+                  orderIdVal, 
+                  userId,
+                  productId: changebuylist.productId, 
+                  productName: changebuylist.productName, 
+                  productPrice: changebuylist.productPrice, 
+                  productNum: changebuylist.productNum, 
+                  productImg: changebuylist.productImg, 
+                  userName, streetName, postCode, tel, totalPrice, itemPrice, discount, shipPrice, freightRisk, createDate, ifPay
+                 }
+              var values = [];
+              var _arr = [];
+              Object.keys(ire).forEach((key) => {            
+                _arr.push(ire[key])            
+              });
+              values.push(_arr);
+              console.log("values")
+             console.log(values)
+              let inSql = "insert into orderlist(orderId,userId,productId,productName,productPrice,productNum,productImg,postName,streetName,postCode,tel,totalPrice,itemPrice,discount,shipPrice,freightRisk,createDate,ifPay) values?";
+              //let delSql = `delete from cartlist where checked=${checked}`;
+                        pool.query(inSql, [values], (err, result) => {
+                          if (err) {
+                            res.json({
+                              status: '-1',
+                              msg: err.message
+                            });
+                          }else{
+                            res.json({
+                              status:'1',
+                              msg: 'suc',
+                              result: orderIdVal
+                            })
+                          } 
+                        });
+
+             }
+           })
+    }
+      
   } else {
     res.json({
       status:'0',

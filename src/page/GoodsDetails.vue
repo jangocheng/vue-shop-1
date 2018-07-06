@@ -1,10 +1,6 @@
 <!--商品详情-->
 <template>
 <div>
-  <mall-header v-on:initscroll="scrollTop"></mall-header>
-  <mall-bread>
-  <span>商品列表</span>
-  </mall-bread>
   <div class="w store-content" v-for="item in goodsList">
     <div ref="gray"  class="gray-box">
       <div class="gallery-wrapper">
@@ -58,7 +54,7 @@
                     classStyle="main-btn"
                     style="width: 145px;height: 50px;line-height: 48px"></y-button>
           <y-button text="现在购买"
-                    @btnClick="checkout(product.productId)"
+                    @btnClick="checkout(item)"
                     style="width: 145px;height: 50px;line-height: 48px;margin-left: 10px"></y-button>
         </div>
       </div>
@@ -87,7 +83,6 @@
             <router-link to="/cart" class="btn btn--m" @click="mdShow=false" v-if="ifCart">去购物车</router-link> 
           </div>
         </modal>
-  <mall-footer></mall-footer>
 </div>
 </template>
 <script>
@@ -96,9 +91,6 @@
   import YShelf from '../components/shelf'
   import BuyNum from '../components/buynum'
   import YButton from '../components/YButton'
-  import mallHeader from '../components/header.vue'
-  import mallFooter from '../components/footer.vue'
-  import mallBread from '../components/navbread.vue'
   import modal from '../components/modal.vue'
   // import { getStore } from '/utils/storage'
   import axios from 'axios'
@@ -148,12 +140,12 @@
       },
       calHeight(){
         var clientWidth = document.body.clientWidth;
-        console.log("屏幕宽度"+clientWidth)
+        // console.log("屏幕宽度"+clientWidth)
         if(clientWidth<1024){
           var gallery = this.$refs.gallery;
           var banner = this.$refs.banner;
           var Height= gallery[0].offsetHeight+banner[0].offsetHeight;
-          console.log("所求高度"+Height)
+          // console.log("所求高度"+Height)
           var gray = this.$refs.gray
           gray[0].style.height = Height+'px'
 
@@ -204,10 +196,30 @@
         closeModal() {
           this.mdShow = false;
         },
-      checkout (productId) {
+      checkout (item) {
+        var productId=item.productId
+        //先检测是否登录
         axios.get('/api/users/checkLogin').then((res) => {
             res = res.data;
             if(res.status === '1') {
+                  axios.post('/api/buynow',{
+                    params:{
+                      productId:item.productId //传给后台用于查询
+                    }
+                }).then((res)=>{
+                    res=res.data
+                    //console.log(res)
+                    var setdata = {
+                      productName:res.productName,
+                      productPrice:res.productPrice,
+                      productNum:res.productNum,
+                      productImg:res.productImg,
+                      productId:item.productId,
+                      userId:res.userId
+                    }
+                    //console.log(setdata)
+                    this.$store.commit('updatebuynowlist',setdata)
+                 })
              this.$router.push({
                     path: '/checkout', query: {productId, num: this.productNum}
                   });
@@ -217,6 +229,7 @@
                     this.mdShow = true;
            }
           });
+     
       },
       scrollTop() {
           var promise = new Promise(()=>{
@@ -230,9 +243,6 @@
       YShelf, 
       BuyNum, 
       YButton,
-      mallHeader,
-      mallFooter,
-      mallBread,
       modal
     },
     //created () {
