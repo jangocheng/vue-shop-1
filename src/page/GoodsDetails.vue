@@ -22,9 +22,6 @@
               <li :class="{on:big===5}" @click="big=5">
                 <img v-lazy="`static/${item.productImg}`" :alt="item.productName">
               </li>
-              <!-- <li>
-                <img src="../assets/img/1.png" alt="">
-              </li> -->
             </ul>
           </div>
           <div class="thumb">

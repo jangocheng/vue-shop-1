@@ -5,12 +5,11 @@
           <li><router-link to="/">首页</router-link><li>
           <li class="li-brand"><a href="#">品牌</a>
             <ul class="nav-bar-ul-second">
-              <li><a href="http://hd.oppo.com/act/2018/FindX0622/index.html?utm_source=baidu&utm_medium=cpcfindx&utm_campaign=pcfindx00996">OPPO find x </a></li>
-              <li><a href="https://sale.vmall.com/p20.html?cid=547">华为P20</a></li>
-              <li><a href="https://sale.vmall.com/honor.html?cid=63137&smtid=530089160z2d0az1h042z5qz0z">荣耀</a></li>
-              <li><a href="http://www.vivo.com/vivo/nexs">vivo nex</a></li>
+              <li><a href="https://sale.vmall.com/p20.html?cid=547">华为</a></li>
+              <li><a href="https://www.mi.com/mi8/">小米</a></li>
+              <li><a href="http://hd.oppo.com/act/2018/FindX0622/index.html?utm_source=baidu&utm_medium=cpcfindx&utm_campaign=pcfindx00996">OPPO</a></li>  
               <li><a href="https://www.vivo.com/?cid=w-2-baidu_ada-pinzhuan">vivo</a></li>
-              <li><a href="https://www.mi.com/mi8/">小米8</a></li>
+              <li><a href="https://sale.vmall.com/honor.html?cid=63137&smtid=530089160z2d0az1h042z5qz0z">荣耀</a></li>              
               <li><a href="https://www.apple.com/cn/iphone-x/">iPhone X</a></li>
               <li><a href="https://www.smartisan.com/r1/overview">坚果R1</a></li>
             </ul>

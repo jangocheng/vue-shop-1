@@ -33,7 +33,7 @@
                   </div>
                   <div class="cart-l-r">
                     <div>¥{{item.productPrice}}</div>
-                    <div class="num">{{item.productNum}}</div>
+                    <div class="num productNum">{{item.productNum}}</div>
                     <div class="type">
                       <button style="margin-left:20px" class="del-order" @click="delOrderList(item)">删除此订单</button>
                       <!-- <a @click="_delOrder(item.orderId,i)" href="javascript:;" v-if="j<1" class="del-order">删除此订单</a> -->
@@ -45,7 +45,7 @@
                   <span></span>
                 </div>
               </div>
-              <div class="prod-operation pa" style="position:absolute; right: 0;top: 0;">
+              <div class="prod-operation pa">
                 <div class="total">¥ {{item.totalPrice}}</div>
                 <div class="pay-content">
                   <button class="payBtn" @click="payOrder(item)" v-show="item.ifPay===0?true:false">现在付款</button>
@@ -63,17 +63,7 @@
         </div>
       </div>
     </y-shelf>
-    <!-- <div style="float:right">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[5, 10, 20, 50]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next"
-        :total="total">
-      </el-pagination>
-    </div> -->
+
     <pay-suc :mdShow="mdShow" v-on:close="closeModal">
       <!-- <p class="paySuc"slot="message"><i class="icon-check_circle"></i>付款成功！</p> -->
       <div class="pay-type" slot="message" v-if="payShow">
@@ -242,18 +232,46 @@ import $ from 'jquery'
       display: flex;
       justify-content: space-between;
       flex: 1;
+      .order-name{
+         margin-left: 150px;
+        @media screen and (max-width: 768px){
+          margin-left:10px;
+          z-index: 99;
+          }
+      }
       .f-bc {
         > span {
           width: 112px;
           text-align: center;
         }
+        @media screen and (max-width: 768px){
+        .operation{
+          display: none;
+        }
+        .price{
+          position:absolute;
+          left:200px;  
+        }
+        .num{
+          position:absolute;  
+          left:240px;  
+        }
       }
     }
+  }
     .last {
       width: 230px;
       text-align: center;
       display: flex;
       border-left: 1px solid #ccc;
+      @media screen and (max-width: 520px) {
+      // position:absolute;
+      // top:270px;
+      // z-index:99;
+      // left:0;
+      display: none;
+    }
+    
       span {
         flex: 1;
       }
@@ -270,7 +288,11 @@ import $ from 'jquery'
 
   .order-id {
     margin-left: 25px;
+    @media screen and (max-width: 1008px) {
+      display: none !important;
+    }
   }
+
 
   .cart {
     display: flex;
@@ -322,9 +344,18 @@ import $ from 'jquery'
         display: flex;
         height:24px;
         line-height: 24px;
+        @media screen and (max-width: 768px){
+          margin-left:-20px; 
+        }
         > div {
           text-align: center;
           width: 112px;
+        }
+        .productNum{
+          @media screen and (max-width: 768px) {
+            margin-left:-70px;
+          }
+          
         }
       }
       .car-l-l {
@@ -332,9 +363,16 @@ import $ from 'jquery'
         align-items: center;
         .orderlistId{
           margin-left:-200px;
+          @media screen and (max-width: 1008px) {
+           display: none !important;
+          }
         }
         .productName{
-          margin-left:50px;
+          margin-left:-200px;
+          width: 80px;
+          @media screen and (min-width: 1009px){
+            margin-left:40px;
+          }
         }
       }
     }
@@ -349,11 +387,20 @@ import $ from 'jquery'
   }
 
   .prod-operation {
-    height: 110px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 254px;
+    position:absolute; 
+    right: 0;
+    top: 0;
+    @media screen and (max-width: 520px) {
+      // position: absolute;
+      // top:180px;
+      // left: 0;
+      display: none;
+    }
     .total{
       flex:0 0 100px;
       text-align: center;

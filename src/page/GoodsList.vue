@@ -2,7 +2,6 @@
     <div>
       <div class="index-wrapper">
         <div class="guide-content">
-            <!-- <div class="left-content"></div> -->
             <div class="right-content">
             	<slide-show :slides="slides" :inv="invTime"></slide-show>
             </div>
@@ -39,22 +38,16 @@
                         <div class="name">{{item.productName}}</div>
                         <div class="details"><a href="javascript:;" :title="`${item.productDetails}`" @click="goDetail(item)">{{item.productDetails}}</a></div>
                         <div class="price">{{item.productPrice | formatMoney('元')}}</div>
-                        <!-- <div class="btn-area">
-                          <a href="javascript:;" class="btn btn--m" @click="goDetail(item)">查看详情</a>
-                          <a href="javascript:;" class="btn btn--m" style="background: #d1434a; color:#fff;" @click="addCart(item)">加入购物车</a>
-                        </div> -->
                       </div>
                     </li>
                   </ul>
                   <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="30">
                     <div class="loading" style="text-align: center" v-show="!busy">
                     	<img src="../../static/loading-svg/loading-spinning-bubbles.svg" alt="">
-                    </div>
-                   <!--  <p style="text-align: center" v-show="!busy">loading...</p>	 -->
+                    </div>            
                   </div>
                 </div>
                 <div v-if="!checkGoodsLen" style="width:100%; height:100%; background:url(../../static/404.png) no-repeat center;">
-                    <!-- <img src="../../static/404.jpg" alt=""> -->
                 </div>
               </div>
             </div>
