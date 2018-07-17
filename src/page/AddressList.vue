@@ -109,7 +109,6 @@
 import modal from '../components/modal.vue'
 import insertAdr from '../components/insertAdr.vue'
 import axios from 'axios'
-import $ from 'jquery'
   export default{
       data(){
           return{

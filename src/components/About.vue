@@ -25,7 +25,7 @@
                
             </div>
             <div class="table-right">
-              
+              <img src="../../static/about.jpg" alt="">
             </div>
         </div>
     </div> 
@@ -66,37 +66,41 @@
     max-width :1080px
     margin :0 auto
     text-indent: 2em
+    text-align:justify
+    padding:0 20px
 .content
   display :flex
   overflow :hidden
-  height :600px
+  //min-height :600px
+  justify-content :center
+  flex-direction :column
 .table-left
   position :relative
-  width:500px
-  margin:4px 20px 0 100px
+  width:100%
   .table-left-h
-    position :absolute
-    top:20px
-    left:10px
-    font-size :20px
-    font-weight:700
+    font-size :2em
+    font-weight:540
+    text-align :center
+    margin:20px 0
   .table-left-content
-    position :absolute
-    top:70px
-.table-right
-  width:500px
-  flex:1
-  position :relative
-  .table-right-span
-    position :absolute
-    top:20px
-    left:10px
-    font-size :20px
-    font-weight:700
-  .table-right-form
-    position :absolute
-    top:50px
-    height:100%
-   
+    display :block
+    max-width :1080px
+    margin :0 auto
+    text-indent: 2em
+    text-align:justify
+    padding:0 20px
+ .table-right
+   width :100%
+   margin:50px 0
+   position :relative
+   height :30vw
+   img
+     position :absolute
+     top:50%
+     left :50%
+     transform :translate(-50%,-50%)
+     width :80vw
+     height :30vw
+     margin:0 auto
 </style>
 

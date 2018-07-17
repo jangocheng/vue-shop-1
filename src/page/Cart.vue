@@ -149,7 +149,6 @@
 import modal from '../components/modal.vue'
 import { mapState } from 'vuex' 
 import axios from 'axios'
-import $ from 'jquery'
     export default{
         data(){
             return{

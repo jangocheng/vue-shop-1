@@ -83,7 +83,7 @@
 </div>
 </template>
 <script>
-  import { productDet, addCart } from '../api/goods.js'
+  // import { productDet, addCart } from '../api/goods.js'
   import { mapMutations, mapState } from 'vuex'
   import YShelf from '../components/shelf'
   import BuyNum from '../components/buynum'
@@ -91,7 +91,6 @@
   import modal from '../components/modal.vue'
   // import { getStore } from '/utils/storage'
   import axios from 'axios'
-  import $ from 'jquery'
   export default {
     data () {
       return {

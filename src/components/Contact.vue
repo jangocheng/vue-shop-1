@@ -4,7 +4,7 @@
     <div class="contain">
         <div class="head">
             <h1>反馈留言</h1>
-            <p>好购公司创办于2018年。。。</p>
+            <p>好购公司创办于2018年</p>
         </div>
         <div class="content">
             <div class="table-left">
@@ -34,7 +34,7 @@
                     <input type="text" placeholder="电话">
                     <input type="text" placeholder="建议">
                     <textarea name="" id="" cols="75" rows="10">写下你想说的...</textarea>
-                    <input class="submit" type="submit" value="提交">
+                    <input class="submit" type="submit" @click="submit" value="提交">
                 </form>
             </div>
         </div>
@@ -56,7 +56,10 @@
      
     },
     methods: {
-        
+      submit(){
+        alert("感谢您的留言！")
+        return
+      }  
     }
   
   }
@@ -74,13 +77,22 @@
     margin:20px
 .content
   display :flex
+  @media screen and (max-width :1023px){
+    flex-direction :column 
+  }
 .table-left
   width:500px
   margin:4px 20px 0 100px
+  @media screen and (max-width :1023px){
+    margin:0 auto
+  }
   .public
     width:520px
     height :230px
     position :relative
+    @media screen and (max-width :1023px){
+      width:100vw
+    }
     .table-p1
       position :absolute
       left 160px
@@ -103,6 +115,10 @@
   width:500px
   flex:1
   position :relative
+  @media screen and (max-width :1023px){
+    min-height :660px
+    margin:0 auto
+  }
   .table-right-span
     position :absolute
     top:20px
@@ -113,6 +129,10 @@
     position :absolute
     top:50px
     height:100%
+    @media screen and (max-width :1023px){
+      display :flex
+      flex-direction:column
+    }
     input
       float :left
       margin:10px
@@ -121,10 +141,14 @@
     textarea
       float :left
       margin:10px
+      @media screen and (max-width :1023px){
+        display :block
+        width:90vw
+      }      
     .submit
       float :left
       width:70px
       height :30px
-      margin-top:50px 
+      margin-top:10px 
 </style>
 

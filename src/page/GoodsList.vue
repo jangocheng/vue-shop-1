@@ -321,10 +321,6 @@ import $ from 'jquery'
     }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
-// @media screen and (max-width:767px)
-//   .details
-//     height:20vw !important
-//     overflow:inherit !important   
 .guide-content
 	width:100%
 	display:flex
