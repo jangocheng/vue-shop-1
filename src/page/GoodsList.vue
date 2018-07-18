@@ -32,7 +32,8 @@
                   <ul>
                     <li v-for="item in goodsList" @click="goDetail(item)">
                       <div class="pic">
-                        <a href="#"><img v-lazy="`static/${item.productImg}`" alt=""></a> <!--v-lazy图片懒加载-->
+                        <!-- <a href="#"><img v-lazy="`static/${item.productImg}`" alt=""></a> v-lazy图片懒加载 -->
+                        <a href="#"><img :src="`static/${item.productImg}`"></a><!--图片用相对地址只能用字符串拼接-->
                       </div>
                       <div class="main">
                         <div class="name">{{item.productName}}</div>
@@ -121,24 +122,24 @@ import $ from 'jquery'
             invTime: 2000,
             slides: [
 		        {
-		          src: require('../../static/slide-img/14766931740570.jpg'),
+		          src: require('../../static/slide-img/banner1.jpg'),
 		          title: '',
-		          href: 'detail/analysis'
+		          href: 'https://www.mi.com/index.html'
 		        },
 		        {
-		          src: require('../../static/slide-img/15144381201181.jpg'),
+		          src: require('../../static/slide-img/banner2.jpg'),
 		          title: '',
-		          href: 'detail/count'
+		          href: 'https://www.mi.com/migaminglaptop/'
 		        },
 		        {
-		          src: require('../../static/slide-img/15144443267556.jpg'),
+		          src: require('../../static/slide-img/banner3.jpg'),
 		          title: '',
-		          href: 'http://xxx.xxx.com'
+		          href: 'https://www.oneplus.com/cn/6'
 		        },
 		        {
-		          src: require('../../static/slide-img/15144482787248.jpg'),
+		          src: require('../../static/slide-img/banner5.jpg'),
 		          title: '',
-		          href: 'detail/forecast'
+		          href: 'https://www.meizu.com'
 		        }
 	      ],
 

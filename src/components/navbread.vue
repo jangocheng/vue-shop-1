@@ -11,7 +11,7 @@
               <li><a href="https://www.vivo.com/?cid=w-2-baidu_ada-pinzhuan">vivo</a></li>
               <li><a href="https://sale.vmall.com/honor.html?cid=63137&smtid=530089160z2d0az1h042z5qz0z">荣耀</a></li>              
               <li><a href="https://www.apple.com/cn/iphone-x/">iPhone X</a></li>
-              <li><a href="https://www.smartisan.com/r1/overview">坚果R1</a></li>
+              <li><a href="https://www.meizu.com">魅族</a></li>
             </ul>
           </li>
           <li><router-link to="/about">关于我们</router-link></li>

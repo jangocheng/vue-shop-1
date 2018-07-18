@@ -13,10 +13,10 @@
                 </select>
               </div>
               <div class="footer__secondary__nav">
-                <span>Copyright © 2017 Mall 版权所有.</span>
-                <a href=":;">
+                <span>Copyright © 2018 Mall 版权所有.</span>
+                <router-link to="/about">
                   关于我们
-                </a>
+                </router-link>
                 <a href=":;">
                   团队 &amp; 加入
                 </a>

@@ -64,7 +64,7 @@
             <div></div>
           </div> -->
           <div class="no-info">
-            <img v-lazy="`static/details-img/${item.descImg}`">
+            <img v-lazy="`static/details-img/${item.descImg}`" onclick="return false">
             <br>
             {{item.desc}}
           </div>

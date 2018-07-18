@@ -28,12 +28,12 @@
             </div>
             <div class="table-right">
                 <span class="table-right-span">留言表单</span>
-                <form class="table-right-form" action="">
-                    <input type="text" placeholder="姓名">
-                    <input type="text" placeholder="邮箱">
-                    <input type="text" placeholder="电话">
-                    <input type="text" placeholder="建议">
-                    <textarea name="" id="" cols="75" rows="10">写下你想说的...</textarea>
+                <form class="table-right-form">
+                    <input type="text" v-model="userName" placeholder="姓名">
+                    <input type="text" v-model="email" placeholder="邮箱">
+                    <input type="text" v-model="phone" placeholder="电话">
+                    <input type="text" v-model="suggest" placeholder="建议">
+                    <textarea v-model="content" cols="75" rows="10">写下你想说的...</textarea>
                     <input class="submit" type="submit" @click="submit" value="提交">
                 </form>
             </div>
@@ -47,7 +47,11 @@
     name:'About',
     data () {
       return {
-      
+      userName:'',
+      email:'',
+      phone:'',
+      suggest:'',
+      content:''
       }
     },
     computed: {

@@ -60,10 +60,30 @@
         <div :class="{'md-overlay':insertShow}" id="showOverLay" @click="closeModal"></div>
     </div>
 </template>
+
 <style lang="stylus" rel="stylesheet/stylus">
   .md-show
     display:block
+  #showModalw
+    @media screen and (max-width :768px){
+      margin-top :30px
+    }
+    .md-content
+      @media screen and (max-width :768px){
+        height :90%
+      }
+      .confirm-tips
+        @media screen and (max-width :768px){
+          display :flex
+          flex-direction:column
+        }
+        .btn-wrap{
+          @media screen and (max-width :768px){
+            margin-bottom :20px
+        }
+        }
 </style>
+
 <script>
 import "../assets/css/modal.css"
     export default{

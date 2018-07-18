@@ -97,11 +97,8 @@
           <a href="javascript:;" class="btn btn--m" @click="deleteAdr">确定</a>
         </div>
       </modal>
+      <!--添加新地址-->
       <insert-adr :insertShow="insertShow" v-on:insertNewAdr="insertAdr" v-on:close="closeInsert">
-        <!-- <div slot="btnWrap">
-          <a href="javascript:;" class="btn btn--m" @click="closeInsert">取消</a>
-          <a href="javascript:;" class="btn btn--m" @click="deleteAdr">确定</a>
-        </div> -->
       </insert-adr>
     </div>
 </template>
