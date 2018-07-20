@@ -136,7 +136,7 @@
       },
       calHeight(){
         var clientWidth = document.body.clientWidth;
-        // console.log("屏幕宽度"+clientWidth)
+         console.log("屏幕宽度"+clientWidth)
         if(clientWidth<1024){
           var gallery = this.$refs.gallery;
           var banner = this.$refs.banner;

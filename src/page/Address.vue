@@ -228,6 +228,7 @@ import axios from 'axios'
             }else{
               list.isDefault=0;
             }
+            console.log(list.isDefault)
           });
           var param = {
             addressId:item

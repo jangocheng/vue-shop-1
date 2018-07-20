@@ -181,10 +181,10 @@ import $ from 'jquery'
             sortVul = '';
           }
           var param = {
-            page:this.page,
-            pageSize:this.pageSize,
-            sort:sortVul,
-            priceLevel:this.clickflag
+            page:this.page,//1
+            pageSize:this.pageSize,//8
+            sort:sortVul,//1或0或空
+            priceLevel:this.clickflag//区间
           }
           axios.get('/api/list', {
             params:param // 将参数传递给后端
