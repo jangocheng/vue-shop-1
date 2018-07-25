@@ -1,8 +1,12 @@
-一、技术栈：vue-cli2 + vue2.0 + vue-router + vuex + axios + stylus + scss + node.js + es6 + express + mysql
+Vue电子商城
 
-二、文件说明：server文件夹为后端部分，其他文件为前端部分
+实现功能：登录/注册、商品搜索、排序、购物车、收获地址管理、支付结算、订单生成
 
-三、运行
+技术栈：vue-cli2 + vue2.0 + vue-router + vuex + axios + stylus + scss + node.js + es6 + express + mysql
+
+文件说明：server文件夹为后端部分，其他文件为前端部分
+
+运行：
 
 1.安装依赖：
 在命令行操作
