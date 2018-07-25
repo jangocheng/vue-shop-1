@@ -25,15 +25,16 @@ cd server
 
 npm install（安装依赖）
 
-
 2.本地开发，开启服务器，浏览器访问http://localhost:8081
 
 手机和电脑连同一个局域网，手机浏览器输入http://电脑IP:8081即可在手机上访问
 
 vue:
+
 npm run dev
 
 express:
+
 node bin\www
 
 3.构建生产
